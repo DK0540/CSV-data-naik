@@ -1,0 +1,44 @@
+{
+    "users": [
+        {
+            "name": "john",
+            "email": "john@gmail.com",
+            "phone": "9989898877",
+            "address":"UK",
+            "id": "4",
+            "status": "Active"
+        },
+        {
+            "name": "dk",
+            "email": "dk@gmail.com",
+            "phone": "6689898877",
+            "address":"KK",
+            "id": "3",
+            "status": "Inactive"
+        },
+        {
+            "name": "naik",
+            "email": "naik@gmail.com",
+            "phone": "9989898888",
+            "address":"US",
+            "id": "2",
+            "status": "Inactive"
+        },
+        {
+            "name": "Boss",
+            "email": "boss@gmail.com",
+            "phone": "9922898877",
+            "address":"OK",
+            "id": "1",
+            "status": "Active"
+        },
+        {
+            "name": "Appu",
+            "email": "appu@gmail.com",
+            "phone": "9339898877",
+            "address":"UL",
+            "id": "5",
+            "status": "Active"
+        }
+    ]
+}
