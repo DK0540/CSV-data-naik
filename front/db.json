@@ -39,6 +39,70 @@
             "address":"UL",
             "id": "5",
             "status": "Active"
+        },
+        {
+            "name": "Raaj",
+            "email": "raaj@gmail.com",
+            "phone": "9339898833",
+            "address":"SADA",
+            "id": "6",
+            "status": "Inactive"
+        },
+        {
+            "name": "Morya",
+            "email": "mourya@gmail.com",
+            "phone": "9335598877",
+            "address":"KAN",
+            "id": "7",
+            "status": "Active"
+        },
+        {
+            "name": "Kitty",
+            "email": "kitty@gmail.com",
+            "phone": "6339898877",
+            "address":"JP",
+            "id": "8",
+            "status": "Active"
+        },
+        {
+            "name": "KK",
+            "email": "kk@gmail.com",
+            "phone": "9330998877",
+            "address":"PL",
+            "id": "9",
+            "status": "Active"
+        },
+        {
+            "name": "Gani",
+            "email": "gani@gmail.com",
+            "phone": "5639898877",
+            "address":"NBM",
+            "id": "10",
+            "status": "Active"
+        },
+        {
+            "name": "shiva",
+            "email": "shiva@gmail.com",
+            "phone": "9339890077",
+            "address":"PPL",
+            "id": "11",
+            "status": "Active"
+        },
+        {
+            "name": "dasa",
+            "email": "dasa@gmail.com",
+            "phone": "9779898877",
+            "address":"OOL",
+            "id": "12",
+            "status": "Inactive"
+        },
+        {
+            "name": "sudeep",
+            "email": "sudi@gmail.com",
+            "phone": "9333898877",
+            "address":"kkl",
+            "id": "13",
+            "status": "Active"
         }
     ]
 }

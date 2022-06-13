@@ -20,7 +20,8 @@ const NewdataList = () => {
   const [sortValue, setSortValue] = useState("")
   const [currentPage, setCurrentPage] =useState(0);
   const [pageLimit] = useState(4);
-
+  const[sortFilterValue, setSortFileterValue] = useState("");
+  const [operation, setOperation] = useState("")
 
   const sortOptions = ['name', 'email', 'phone','address',"id", 'status']
 
@@ -28,40 +29,70 @@ const NewdataList = () => {
     loadUsersData(0,4,0);
   },[])
 
-  const loadUsersData = async (start, end, increase) => {
-    return await axios
-    .get(`http://localhost:5008/users?_start=${start}&_end=${end}`)
-    .then((response)=>{setData(response.data);
-     setData(response.data);
-     setCurrentPage(currentPage + increase)
-    })
-    .catch((err)=> console.log(err));
-}
+  const loadUsersData = async (start, end, increase, optType=null, filterOrSortValue) => {
+    switch (optType) {
+      case "search":
+      setOperation(optType);
+      setSortValue("");
+      return await axios.get(`http://localhost:5008/users?q=${value}&_start=${start}&_end=${end}`)
+      .then((response)=>{
+        setData(response.data);
+        setCurrentPage(currentPage + increase)
+        // setValue("");
+        })
+      .catch((err)=>console.log(err))
+      case "sort": 
+        setOperation(optType);
+        setSortFileterValue(filterOrSortValue)
+        return await axios.get(`http://localhost:5008/users?_sort=${filterOrSortValue}&_order=asc&_start=${start}&_end=${end}`)
+  .then((response)=>{
+    setData(response.data);
+    setCurrentPage(currentPage + increase);
+   })
+  .catch((err)=>console.log(err))
+
+      default:
+        return await axios
+        .get(`http://localhost:5008/users?_start=${start}&_end=${end}`)
+        .then((response)=>{setData(response.data);
+         setData(response.data);
+         setCurrentPage(currentPage + increase)
+        })
+        .catch((err)=> console.log(err));
+    }
+ 
+};
 console.log("data", data)
 
 const handleReset =()=>{
+  setOperation("");
+  setValue("");
+  setSortFileterValue("");
+  setSortValue("");
   loadUsersData(0,4,0);
 };
 
 const handleSearch = async (e)=>{
   e.preventDefault();
-  return await axios.get(`http://localhost:5008/users?q=${value}`)
-  .then((response)=>{
-    setData(response.data);
-    setValue("");
-    })
-  .catch((err)=>console.log(err))
+  loadUsersData(0, 4, 0, "search")
+  // return await axios.get(`http://localhost:5008/users?q=${value}`)
+  // .then((response)=>{
+  //   setData(response.data);
+  //   setValue("");
+  //   })
+  // .catch((err)=>console.log(err))
 };
 
 
 const handleSort = async (e)=>{
   let value =e.target.value;
   setSortValue(value)
- return await axios.get(`http://localhost:5008/users?_sort=${value}&_order=asc`)
-  .then((response)=>{
-    setData(response.data);
-   })
-  .catch((err)=>console.log(err))
+  loadUsersData(0, 4, 0, "sort", value)
+//  return await axios.get(`http://localhost:5008/users?_sort=${value}&_order=asc`)
+//   .then((response)=>{
+//     setData(response.data);
+//    })
+//   .catch((err)=>console.log(err))
 };
 
 
@@ -75,6 +106,7 @@ const handleFilter = async (value)=>{
 
 
 const renderPagination =()=>{
+  if(data.length < 4 && currentPage === 0) return null;
   if(currentPage === 0) {
     return (
       <MDBPagination className='mb-0'>
@@ -82,37 +114,45 @@ const renderPagination =()=>{
           <MDBPaginationLink>1</MDBPaginationLink>
         </MDBPaginationItem>
         <MDBPaginationItem>
-          <MDBBtn onClick={()=> loadUsersData(4, 8, 1)}>Next</MDBBtn>
+          <MDBBtn onClick={()=> loadUsersData(4, 8, 1, operation, sortFilterValue)}>Next</MDBBtn>
         </MDBPaginationItem>
       </MDBPagination>
     );
-  } else if (currentPage < pageLimit-1 && data.length === pageLimit){
+  } else if (currentPage < pageLimit - 1 && data.length === pageLimit) {
     return (
       <MDBPagination className='mb-0'>
-     <MDBPaginationItem>
-        <MDBBtn onClick={()=> loadUsersData((currentPage - 1) * 4, (currentPage )* 4 , -1)}>Prev</MDBBtn>
+      <MDBPaginationItem>
+        <MDBBtn 
+        onClick={()=>
+         loadUsersData((currentPage - 1) * 4, currentPage * 4 , -1, operation, sortFilterValue)
+         }
+         >
+         Prev
+         </MDBBtn>
       </MDBPaginationItem>
       <MDBPaginationItem>
            <MDBPaginationLink>{currentPage + 1}</MDBPaginationLink>
       </MDBPaginationItem>
      <MDBPaginationItem>
-        <MDBBtn onClick={()=> loadUsersData((currentPage + 1) * 4, (currentPage + 1) * 4, 1)}> Next</MDBBtn>
+        <MDBBtn onClick={()=> loadUsersData((currentPage + 1) * 4, (currentPage + 2) * 4, 1, operation, sortFilterValue)}>
+         Next
+        </MDBBtn>
       </MDBPaginationItem>
     </MDBPagination>
     );
   } else {
     return (
       <MDBPagination className='mb-0'>
-      <MDBPaginationItem>
-        <MDBBtn onClick={()=> loadUsersData(4, 8, -1)}>Prev</MDBBtn>
+       <MDBPaginationItem>
+        <MDBBtn onClick={()=> loadUsersData((currentPage -1) * 4, currentPage * 4, -1, operation, sortFilterValue)}>Prevv</MDBBtn>
       </MDBPaginationItem>
       <MDBPaginationItem>
         <MDBPaginationLink>{currentPage + 1}</MDBPaginationLink>
       </MDBPaginationItem>
-    </MDBPagination>
+     </MDBPagination>
     );
   }
-}
+};
 
   return (
    <MDBContainer>
