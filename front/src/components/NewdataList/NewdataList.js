@@ -170,7 +170,7 @@ const renderPagination =()=>{
      {/* </MDBBtnGroup> */}
    </form>
      <div style={{marginTop: "100px"}}>
-     <h2 className='text-center'>CSV Data Project..</h2>
+     <h2 className='text-center'>Using JSON Fake Rest API Search, Filter, Sort and Pagination </h2>
        <MDBRow>
          <MDBCol size="12">
           <MDBTable>
